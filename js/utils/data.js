@@ -42,10 +42,7 @@ const createAnnouncementById = (id) => {
     },
     offer: {
       title: TITLE_DEFAULT,
-      address: {
-        lat: lat,
-        lng: lng
-      },
+      address: `${lat}, ${lng}`,
       price: getRandomNumber(PRICE_MIN, PRICE_MAX),
       type: getRandomArrayElement(PROPERTY_TYPES),
       rooms: getRandomNumber(ROOMS_MIN, ROOMS_MAX),
