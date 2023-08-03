@@ -32,7 +32,7 @@ const LNG_MIN = 139.70000;
 const LNG_MAX = 139.80000;
 const LAT_LNG_PRECISION = 5;
 
-const createAnnouncementById = (id) => {
+const createDataUnitById = (id) => {
   const lat = getRandomNumber(LAT_MIN, LAT_MAX, LAT_LNG_PRECISION);
   const lng = getRandomNumber(LNG_MIN, LNG_MAX, LAT_LNG_PRECISION);
 
@@ -60,6 +60,6 @@ const createAnnouncementById = (id) => {
   };
 };
 
-const createAnnouncements = (quantity) => Array.from({length: quantity}, (_, id) => createAnnouncementById(id + 1));
+const createData = (quantity) => Array.from({length: quantity}, (_, id) => createDataUnitById(id + 1));
 
-export { createAnnouncements };
+export { createData };

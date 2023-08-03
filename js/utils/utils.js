@@ -4,4 +4,10 @@ const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements
 
 const getRandomArraySlice = (elements) => elements.filter(() => Math.random() > 0.5);
 
-export { getRandomNumber, getRandomArrayElement, getRandomArraySlice };
+const createElement = (template) => {
+  const newElement = document.createElement('div');
+  newElement.innerHTML = template;
+  return newElement.firstChild;
+};
+
+export { getRandomNumber, getRandomArrayElement, getRandomArraySlice, createElement };
