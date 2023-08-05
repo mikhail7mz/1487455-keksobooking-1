@@ -1,3 +1,5 @@
-import { createAnnouncements } from './utils/data.js';
+import { renderAdvertById } from './renderAdverts.js';
 
-createAnnouncements(10);
+const ADVERT_ID = 5;
+
+renderAdvertById(ADVERT_ID);
