@@ -43,51 +43,57 @@ const createPhotoFragment = (photos) => {
 const editImageSource = (element, url) => {
   if (!url) {
     element.remove();
-  } else {
-    element.src = url;
+    return;
   }
+
+  element.src = url;
 };
 
 const editTextContent = (element, content) => {
   if (!content) {
     element.remove();
-  } else {
-    element.textContent = content;
+    return;
   }
+
+  element.textContent = content;
 };
 
 const editFirstChildTextContent = (parent, content) => {
   if (!content) {
     parent.remove();
-  } else {
-    parent.firstChild.textContent = `${content} `;
+    return;
   }
+
+  parent.firstChild.textContent = `${content} `;
 };
 
 const editListElement = (parent, content, handler) => {
   if (!content && !content.length) {
     parent.remove();
-  } else {
-    parent.replaceChildren(handler(content));
+    return;
   }
+
+  parent.replaceChildren(handler(content));
 };
 
 const editCapacityElement = (element, rooms, guests) => {
-  if (!rooms || !guests) {
+  if (!rooms && !guests) {
     element.remove();
-  } else {
-    element.textContent = `${rooms ? rooms : 0} комнаты для ${guests ? guests : 0} гостей`;
+    return;
   }
+
+  element.textContent = `${rooms ? rooms : 0} комнаты для ${guests ? guests : 0} гостей`;
 };
 
 const editTimingElement = (element, checkin, checkout) => {
-  if (!checkin || !checkout) {
+  if (!checkin && !checkout) {
     element.remove();
-  } else {
-    const checkinText = checkin ? `после ${checkin}` : 'в любое время';
-    const checkoutText = checkout ? `до ${checkout}` : 'в любое время';
-    element.textContent = `Заезд ${checkinText}, выезд ${checkoutText}`;
+    return;
   }
+
+  const checkinText = checkin ? `после ${checkin}` : 'в любое время';
+  const checkoutText = checkout ? `до ${checkout}` : 'в любое время';
+  element.textContent = `Заезд ${checkinText}, выезд ${checkoutText}`;
 };
 
 const createAdvertTemplate = ({author, offer}) => {
