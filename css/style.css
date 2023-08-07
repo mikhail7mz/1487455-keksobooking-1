@@ -346,6 +346,7 @@ fieldset {
 }
 
 .ad-form__element {
+  position: relative;
   -ms-flex-preferred-size: 25%;
       flex-basis: 25%;
   min-height: 90px;
@@ -405,6 +406,16 @@ fieldset {
 
 .ad-form__element--time select:first-of-type {
   margin-right: 14px;
+}
+
+.ad-form__error-massage {
+  padding-top: 5px;
+  color: #ff6547;
+}
+
+.ad-form__error-massage::before {
+  padding-right: 3px;
+  content: '⚠';
 }
 
 .ad-form__slider.noUi-target:not(#fake-id) {
