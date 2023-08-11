@@ -1,8 +1,5 @@
-import { renderAdvertById } from './renderAdverts.js';
-import { initAddFrom } from './forms/addForm.js';
+import { initAddFrom } from './add-form/add-form.js';
+import { initMap } from './map/render-map.js';
 
-
-const ADVERT_ID = 5;
-
-renderAdvertById(ADVERT_ID);
 initAddFrom();
+initMap();

@@ -1,6 +1,3 @@
-const MESSAGE_INVALID_CAPACITY_FIELD = '1,2,3 комнаты — 1,2,3 гостей соответственно. 100 комнат не для гостей';
-const MESSAGE_INVALID_PRICE_FIELD = 'Цена ниже минимальной';
-
 const guestsInRooms = {
   1: ['1'],
   2: ['1', '2'],
@@ -21,11 +18,18 @@ const pristine = new Pristine(adForm, {
 
 const validatePrice = (price) => Number(price) >= priceField.min;
 
+const getPriceMessage = () => `От ${priceField.min} до ${priceField.max}`;
+
 const validateCapacity = (capacity) => guestsInRooms[roomsField.value].includes(capacity);
 
+const getCapacityMessage = () => {
+  const maxGuests = Math.max(...guestsInRooms[roomsField.value]);
+  return `Если комнат ${roomsField.value}, максимум гостей - ${maxGuests}`;
+};
+
 const initAddFormValidator = () => {
-  pristine.addValidator(priceField, validatePrice, MESSAGE_INVALID_PRICE_FIELD);
-  pristine.addValidator(capacityField, validateCapacity, MESSAGE_INVALID_CAPACITY_FIELD);
+  pristine.addValidator(priceField, validatePrice, getPriceMessage);
+  pristine.addValidator(capacityField, validateCapacity, getCapacityMessage);
 };
 
 const validateAddForm = () => pristine.validate();

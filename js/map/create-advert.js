@@ -1,8 +1,3 @@
-import { createData } from './utils/data.js';
-import { createElement } from './utils/utils.js';
-
-const data = createData(10);
-
 const propertyTypeTitles = {
   palace: 'Дворец',
   flat: 'Квартира',
@@ -11,33 +6,38 @@ const propertyTypeTitles = {
   hotel: 'Отель',
 };
 
-const mapCanvas = document.querySelector('#map-canvas');
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-const createFeaturesFragment = (features) => {
-  const featuresFragment = document.createDocumentFragment();
-  const featureTemplate = '<li class="popup__feature"></li>';
+const editFeaturesList = (element, features) => {
+  if (!features && !features.length) {
+    element.remove();
+    return;
+  }
+
+  const featureTemplate = element.firstElementChild;
+  element.innerHTML = '';
 
   features.forEach((feature) => {
-    const newElement = createElement(featureTemplate);
-    newElement.classList.add(`popup__feature--${feature}`);
-    featuresFragment.append(newElement);
+    const newFeature = featureTemplate.cloneNode(true);
+    newFeature.classList.add(`popup__feature--${feature}`);
+    element.append(newFeature);
   });
-
-  return featuresFragment;
 };
 
-const createPhotoFragment = (photos) => {
-  const photosFragment = document.createDocumentFragment();
-  const photoTemplate = '<img class="popup__photo" width="45" height="40" alt="Фотография жилья">';
+const editPhotosList = (element, photos) => {
+  if (!photos && !photos.length) {
+    element.remove();
+    return;
+  }
+
+  const photoTemplate = element.firstElementChild;
+  element.innerHTML = '';
 
   photos.forEach((photo) => {
-    const newElement = createElement(photoTemplate);
-    newElement.src = photo;
-    photosFragment.append(newElement);
+    const newPhoto = photoTemplate.cloneNode(true);
+    newPhoto.src = photo;
+    element.append(newPhoto);
   });
-
-  return photosFragment;
 };
 
 const editImageSource = (element, url) => {
@@ -67,15 +67,6 @@ const editFirstChildTextContent = (parent, content) => {
   parent.firstChild.textContent = `${content} `;
 };
 
-const editListElement = (parent, content, handler) => {
-  if (!content && !content.length) {
-    parent.remove();
-    return;
-  }
-
-  parent.replaceChildren(handler(content));
-};
-
 const editCapacityElement = (element, rooms, guests) => {
   if (!rooms && !guests) {
     element.remove();
@@ -96,7 +87,7 @@ const editTimingElement = (element, checkin, checkout) => {
   element.textContent = `Заезд ${checkinText}, выезд ${checkoutText}`;
 };
 
-const createAdvertTemplate = ({author, offer}) => {
+const createAdvert = ({author, offer}) => {
   const {avatar} = author;
   const {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos} = offer;
 
@@ -108,15 +99,11 @@ const createAdvertTemplate = ({author, offer}) => {
   editTextContent(popup.querySelector('.popup__type'), propertyTypeTitles[type]);
   editCapacityElement(popup.querySelector('.popup__text--capacity'), rooms, guests);
   editTimingElement(popup.querySelector('.popup__text--time'), checkin, checkout);
-  editListElement(popup.querySelector('.popup__features'), features, createFeaturesFragment);
+  editFeaturesList(popup.querySelector('.popup__features'), features);
   editTextContent(popup.querySelector('.popup__description'), description);
-  editListElement(popup.querySelector('.popup__photos'), photos, createPhotoFragment);
+  editPhotosList(popup.querySelector('.popup__photos'), photos);
 
   return popup;
 };
 
-const renderAdvertById = (id) => {
-  mapCanvas.append(createAdvertTemplate(data[id]));
-};
-
-export { renderAdvertById };
+export { createAdvert };

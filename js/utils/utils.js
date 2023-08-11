@@ -10,10 +10,4 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
-const setFormElementsState = (formElements, state) => {
-  formElements.forEach((element) => {
-    element.disabled = state;
-  });
-};
-
-export { getRandomNumber, getRandomArrayElement, getRandomArraySlice, createElement, setFormElementsState };
+export { getRandomNumber, getRandomArrayElement, getRandomArraySlice, createElement };
