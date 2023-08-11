@@ -1,3 +1,5 @@
+import { initPriceSlider } from './price-slider.js';
+
 const minPriceSettings = {
   palace: 10000,
   flat: 1000,
@@ -31,6 +33,7 @@ const onPropertyTypeFieldChange = () => {
   const minValue = minPriceSettings[propertyTypeField.value];
   priceField.min = minValue;
   priceField.placeholder = minValue;
+  initPriceSlider();
   priceField.dispatchEvent(inputEvent);
 };
 

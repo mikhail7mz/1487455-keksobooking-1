@@ -1,7 +1,3 @@
-import { createData } from './utils/data.js';
-
-const data = createData(10);
-
 const propertyTypeTitles = {
   palace: 'Дворец',
   flat: 'Квартира',
@@ -10,7 +6,6 @@ const propertyTypeTitles = {
   hotel: 'Отель',
 };
 
-const mapCanvas = document.querySelector('#map-canvas');
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const editFeaturesList = (element, features) => {
@@ -111,8 +106,4 @@ const createAdvert = ({author, offer}) => {
   return popup;
 };
 
-const renderAdvert = () => {
-  mapCanvas.append(createAdvert(data[0]));
-};
-
-export { renderAdvert };
+export { createAdvert };
