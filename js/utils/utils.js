@@ -10,4 +10,6 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
-export { getRandomNumber, getRandomArrayElement, getRandomArraySlice, createElement };
+const isEscape = (event) => event.key === 'Escape';
+
+export { getRandomNumber, getRandomArrayElement, getRandomArraySlice, createElement, isEscape };

@@ -41,7 +41,7 @@ const onPriceFieldInput = (event) => {
   setPriceSliderValue(event.target.value);
 };
 
-const initFormFieldSyncronizer = () => {
+const initFormFieldSynchronizer = () => {
   priceField.min = minPriceSettings[propertyTypeField.value];
   priceField.placeholder = minPriceSettings[propertyTypeField.value];
   roomsField.addEventListener('change', onRoomsFieldChange);
@@ -51,4 +51,4 @@ const initFormFieldSyncronizer = () => {
   priceField.addEventListener('change', onPriceFieldInput);
 };
 
-export { initFormFieldSyncronizer };
+export { initFormFieldSynchronizer };

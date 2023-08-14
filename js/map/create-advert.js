@@ -9,7 +9,7 @@ const propertyTypeTitles = {
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const editFeaturesList = (element, features) => {
-  if (!features && !features.length) {
+  if (!features || !features.length) {
     element.remove();
     return;
   }
@@ -25,7 +25,7 @@ const editFeaturesList = (element, features) => {
 };
 
 const editPhotosList = (element, photos) => {
-  if (!photos && !photos.length) {
+  if (!photos || !photos.length) {
     element.remove();
     return;
   }
