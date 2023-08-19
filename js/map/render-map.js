@@ -2,10 +2,14 @@ import { getData} from '../utils/data.js';
 import { createAdvert } from './create-advert.js';
 import { disableAdForm, enableAdForm, disableMapFilters, enableMapFilters } from '../utils/form-states.js';
 import { showNotification } from '../utils/notifications.js';
+import { initAddFrom } from '../add-form/add-form.js';
+import { filterAdverts, initFilters } from './filter-adverts.js';
 
 const TILE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const TILE_LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>';
 const ZOOM = '13';
+
+const MAX_ADVERTS = 10;
 
 const PIN_URL = '../../img/pin.svg';
 const PIN_SIZE = 40;
@@ -13,8 +17,6 @@ const MAIN_PIN_URL = '../../img/main-pin.svg';
 const MAIN_PIN_SIZE = 52;
 
 const LOCATION_PRECISION = 5;
-
-const MAX_ADVERTS = 10;
 
 const GET_DATA_URL = 'https://28.javascript.pages.academy/keksobooking/data';
 const GET_DATA_ERROR_STATUS = 'error';
@@ -24,6 +26,7 @@ const GET_DATA_ERROR_BUTTON_TEXT = 'Закрыть';
 const addressFiled = document.querySelector('#address');
 
 const map = L.map('map-canvas');
+const markerGroup = L.layerGroup().addTo(map);
 
 const defaultLocation = {
   lat: 35.684,
@@ -58,25 +61,30 @@ const resetMainPinMarker = () => {
   setAddressFieldValue(defaultLocation);
 };
 
+const removeAdverts = () => markerGroup.clearLayers();
+
 const addAdverts = (adverts) => {
-  adverts.forEach((advert) => {
+  removeAdverts();
+  adverts.slice(0, MAX_ADVERTS).forEach((advert) => {
     L.marker({
       lat: advert.location.lat,
       lng: advert.location.lng,
     },{
       icon: createIcon(PIN_URL, PIN_SIZE)
-    }).bindPopup(createAdvert(advert)).addTo(map);
+    }).bindPopup(createAdvert(advert)).addTo(markerGroup);
   });
 };
 
 const onGetDataSuccess = (adverts) => {
-  addAdverts(adverts.slice(0, MAX_ADVERTS));
+  addAdverts(filterAdverts(adverts));
+  initFilters(adverts);
   enableMapFilters();
 };
 
 const onGetDataError = () => showNotification(GET_DATA_ERROR_STATUS, GET_DATA_ERROR_MESSAGE, GET_DATA_ERROR_BUTTON_TEXT);
 
 const onMapLoad = () => {
+  initAddFrom();
   enableAdForm();
   getData(GET_DATA_URL, onGetDataSuccess, onGetDataError);
 };
@@ -103,4 +111,4 @@ const resetMap = () => {
   setDefaultMapView();
 };
 
-export { initMap, resetMap };
+export { initMap, resetMap, addAdverts };
