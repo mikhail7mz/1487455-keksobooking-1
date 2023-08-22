@@ -4,6 +4,7 @@ import { showNotification } from '../utils/notifications.js';
 import { initPriceSlider } from './price-slider.js';
 import { resetMap } from '../map/render-map.js';
 import { sendData } from '../utils/data.js';
+import { createElement } from '../utils/utils.js';
 
 const SEND_DATA_URL = 'https://28.javascript.pages.academy/keksobooking';
 
@@ -14,7 +15,18 @@ const NOTIFICATION_ERROR_STATUS = 'error';
 const NOTIFICATION_ERROR_MESSAGE = 'Ошибка размещения объявления';
 const NOTIFICATION_ERROR_BUTTON_TEXT = 'Попробовать снова';
 
+const NOTIFICATION_FILE_INVALID_STATUS = 'error';
+const NOTIFICATION_FILE_INVALID_MESSAGE = 'Некорректный формат файла';
+const NOTIFICATION_FILE_INVALID_BUTTON_TEXT = 'Закрыть';
+
+const AVATAR_URL_DEFAULT = 'img/muffin-grey.svg';
+const FILE_TYPES = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+
 const adForm = document.querySelector('.ad-form');
+const avatarField = document.querySelector('#avatar');
+const avatarPreviewElement = document.querySelector('.ad-form-header__preview img');
+const imagesField = document.querySelector('#images');
+const imagesPreviewElement = document.querySelector('.ad-form__photo');
 
 const onSendDataSuccess = () => {
   showNotification(NOTIFICATION_SUCCESS_STATUS, NOTIFICATION_SUCCESS_MESSAGE);
@@ -25,6 +37,55 @@ const onSendDataError = () => {
   showNotification(NOTIFICATION_ERROR_STATUS, NOTIFICATION_ERROR_MESSAGE, NOTIFICATION_ERROR_BUTTON_TEXT);
 };
 
+const createFileUrl = (target) => {
+  const file = target.files[0];
+  const fileName = file.name.toLowerCase();
+  const isFileValid = FILE_TYPES.some((type) => fileName.endsWith(type));
+
+  if (!isFileValid) {
+    showNotification(NOTIFICATION_FILE_INVALID_STATUS, NOTIFICATION_FILE_INVALID_MESSAGE, NOTIFICATION_FILE_INVALID_BUTTON_TEXT);
+    return;
+  }
+
+  return URL.createObjectURL(file);
+};
+
+const resetAvatarPreview = () => {
+  avatarPreviewElement.src = AVATAR_URL_DEFAULT;
+};
+
+const setAvatarPreview = ({target}) => {
+  resetAvatarPreview();
+  const fileUrl = createFileUrl(target);
+
+  if (!fileUrl) {
+    avatarField.value = '';
+    return;
+  }
+
+  avatarPreviewElement.src = fileUrl;
+};
+
+const onAvatarFieldChange = (event) => setAvatarPreview(event);
+
+const resetImagesPreview = () => {
+  imagesPreviewElement.innerHTML = '';
+};
+
+const setImagesPreview = ({target}) => {
+  resetImagesPreview();
+  const fileUrl = createFileUrl(target);
+
+  if (!fileUrl) {
+    imagesField.value = '';
+    return;
+  }
+
+  imagesPreviewElement.append(createElement(`<img src="${createFileUrl(target)}">`));
+};
+
+const onImagesFieldChange = (event) => setImagesPreview(event);
+
 const onAddFormSubmit = (event) => {
   event.preventDefault();
   if (validateAddForm()) {
@@ -33,6 +94,8 @@ const onAddFormSubmit = (event) => {
 };
 
 const onAddFormReset = () => {
+  resetAvatarPreview();
+  resetImagesPreview();
   resetAddFormValidator();
   setTimeout(() => resetMap());
 };
@@ -41,6 +104,8 @@ const initAddFrom = () => {
   initAddFormValidator();
   initPriceSlider();
   initFormFieldSynchronizer();
+  avatarField.addEventListener('change', onAvatarFieldChange);
+  imagesField.addEventListener('change', onImagesFieldChange);
   adForm.addEventListener('submit', onAddFormSubmit);
   adForm.addEventListener('reset', onAddFormReset);
 };

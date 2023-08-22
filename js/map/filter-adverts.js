@@ -41,19 +41,18 @@ const filterByRooms = (advertRooms) => housingRoomsElement.value === FILTER_VALU
 const filterByGuests = (advertGuests) => housingGuestsElement.value === FILTER_VALUE_ALL || advertGuests.toString() === housingGuestsElement.value;
 
 const filterByFeatures = (advertFeatures) => {
-  const mapCheckboxElements = document.querySelectorAll('.map__checkbox:checked');
-  const choosenFeatures = Array.from(mapCheckboxElements, (element) => element.value);
-  advertFeatures = (advertFeatures) ? advertFeatures : [];
+  const chosenFeatures = Array.from(document.querySelectorAll('.map__checkbox:checked'), (element) => element.value);
+  advertFeatures = advertFeatures || [];
 
-  return choosenFeatures.every((choosenFeature) => advertFeatures.includes(choosenFeature));
+  return chosenFeatures.every((feature) => advertFeatures.includes(feature));
 };
 
-const filterAdverts = (adverts) => adverts.slice().filter((advert) =>
-  filterByHousingType(advert.offer.type) &&
-  filterByPrice(advert.offer.price) &&
-  filterByRooms(advert.offer.rooms) &&
-  filterByGuests(advert.offer.guests) &&
-  filterByFeatures(advert.offer.features));
+const filterAdverts = (adverts) => adverts.slice().filter(({offer}) =>
+  filterByHousingType(offer.type) &&
+  filterByPrice(offer.price) &&
+  filterByRooms(offer.rooms) &&
+  filterByGuests(offer.guests) &&
+  filterByFeatures(offer.features));
 
 const onMapFiltersFormElementChange = (adverts) => addAdverts(filterAdverts(adverts));
 
