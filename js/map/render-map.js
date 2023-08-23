@@ -24,6 +24,7 @@ const GET_DATA_ERROR_MESSAGE = 'Не удалось загрузить данн�
 const GET_DATA_ERROR_BUTTON_TEXT = 'Закрыть';
 
 const addressFiled = document.querySelector('#address');
+const mapFiltersFormElement = document.querySelector('.map__filters');
 
 const map = L.map('map-canvas');
 const markerGroup = L.layerGroup().addTo(map);
@@ -32,6 +33,8 @@ const defaultLocation = {
   lat: 35.684,
   lng: 139.754
 };
+
+const changeEvent = new CustomEvent('change');
 
 const createIcon = (url, size) => L.icon({
   iconUrl: url,
@@ -109,6 +112,8 @@ const initMap = () => {
 const resetMap = () => {
   resetMainPinMarker();
   setDefaultMapView();
+  mapFiltersFormElement.reset();
+  mapFiltersFormElement.dispatchEvent(changeEvent);
 };
 
 export { initMap, resetMap, addAdverts };

@@ -619,6 +619,14 @@ fieldset {
   border-radius: 5px;
 }
 
+.ad-form__photo img{
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  object-fit: contain;
+}
+
 .ad-form__element--submit {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;

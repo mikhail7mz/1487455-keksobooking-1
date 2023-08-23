@@ -12,6 +12,7 @@ const capacityField = adForm.querySelector('#capacity');
 
 const pristine = new Pristine(adForm, {
   classTo: 'ad-form__element',
+  errorClass: 'ad-form__element--invalid',
   errorTextParent: 'ad-form__element',
   errorTextClass: 'ad-form__error-massage'
 });
