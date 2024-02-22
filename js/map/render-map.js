@@ -1,6 +1,6 @@
 import { getData} from '../utils/data.js';
 import { createAdvert } from './create-advert.js';
-import { disableAdForm, enableAdForm, disableMapFilters, enableMapFilters } from '../utils/form-states.js';
+import { enableAdForm, enableMapFilters } from '../utils/form-states.js';
 import { showNotification } from '../utils/notifications.js';
 import { initAdForm } from '../ad-form/ad-form.js';
 import { filterAdverts, initFilters } from './filter-adverts.js';
@@ -18,7 +18,7 @@ const MAIN_PIN_SIZE = 52;
 
 const LOCATION_PRECISION = 5;
 
-const GET_DATA_URL = 'https://28.javascript.pages.academy/keksobooking/data';
+const GET_DATA_URL = 'https://28.javascript.htmlacademy.pro/keksobooking/data';
 const GET_DATA_ERROR_STATUS = 'error';
 const GET_DATA_ERROR_MESSAGE = 'Не удалось загрузить данные. Попробуйте обновить страницу';
 const GET_DATA_ERROR_BUTTON_TEXT = 'Закрыть';
@@ -100,8 +100,6 @@ const setDefaultMapView = () => {
 };
 
 const initMap = () => {
-  disableAdForm();
-  disableMapFilters();
   map.on('load', onMapLoad);
   L.tileLayer(TILE_LAYER_URL, { attribution: TILE_LAYER_ATTRIBUTION }).addTo(map);
   setDefaultMapView();

@@ -6,7 +6,7 @@ import { resetMap } from '../map/render-map.js';
 import { sendData } from '../utils/data.js';
 import { createElement } from '../utils/utils.js';
 
-const SEND_DATA_URL = 'https://28.javascript.pages.academy/keksobooking';
+const SEND_DATA_URL = 'https://28.javascript.htmlacademy.pro/keksobooking';
 
 const NOTIFICATION_SUCCESS_STATUS = 'success';
 const NOTIFICATION_SUCCESS_MESSAGE = 'Ваше объявление<br>успешно размещено!';
