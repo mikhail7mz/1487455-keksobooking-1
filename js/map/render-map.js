@@ -11,9 +11,9 @@ const ZOOM = '13';
 
 const MAX_ADVERTS = 10;
 
-const PIN_URL = '../../img/pin.svg';
+const PIN_URL = 'img/pin.svg';
 const PIN_SIZE = 40;
-const MAIN_PIN_URL = '../../img/main-pin.svg';
+const MAIN_PIN_URL = 'img/main-pin.svg';
 const MAIN_PIN_SIZE = 52;
 
 const LOCATION_PRECISION = 5;
